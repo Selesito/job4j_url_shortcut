@@ -1,4 +1,4 @@
-package ru.job4j.url_shortcut.model;
+package ru.job4j.shortcut.model;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -59,8 +59,12 @@ public class Link {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Link link = (Link) o;
         return id == link.id;
     }
