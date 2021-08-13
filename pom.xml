@@ -16,7 +16,10 @@
     <description>url_shortcut</description>
 
     <properties>
-        <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
+        <java.version>14</java.version>
         <jjwt.version>0.9.1</jjwt.version>
     </properties>
 
