@@ -22,11 +22,20 @@ public class LinkService {
     public Link save(Link link, Principal principal) {
         if (linkRepository.findByUrl(link.getUrl()) == null) {
             link.setCode(UUID.randomUUID().toString());
-            Link rls = linkRepository.save(link);
             Site site = siteRepository.findByLogin(principal.getName());
-            site.addLink(rls);
+            site.addLink(link);
             siteRepository.save(site);
-            return rls;
+            return link;
+        }
+        return null;
+    }
+
+    public Link searchCode(String code) {
+        if (!code.isEmpty() && code != null) {
+            Link link = linkRepository.findByCode(code);
+            link.incrementCount();
+            linkRepository.save(link);
+            return link;
         }
         return null;
     }

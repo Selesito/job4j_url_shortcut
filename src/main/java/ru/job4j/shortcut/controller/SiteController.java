@@ -1,12 +1,12 @@
 package ru.job4j.shortcut.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.job4j.shortcut.model.Link;
 import ru.job4j.shortcut.model.Site;
 import ru.job4j.shortcut.service.SiteService;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/site")
@@ -23,5 +23,10 @@ public class SiteController {
                 this.service.save(site),
                 HttpStatus.CREATED
         );
+    }
+
+    @GetMapping("/statistic")
+    public Iterable<Link> findAll(Principal principal) {
+        return this.service.findAll(principal);
     }
 }

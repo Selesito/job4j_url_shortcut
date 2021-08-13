@@ -72,6 +72,10 @@ public class Site {
         this.links.add(link);
     }
 
+    public Set<Link> getLinks() {
+        return links;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

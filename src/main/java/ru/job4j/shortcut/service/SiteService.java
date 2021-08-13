@@ -2,9 +2,13 @@ package ru.job4j.shortcut.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.job4j.shortcut.model.Link;
 import ru.job4j.shortcut.model.Site;
 import ru.job4j.shortcut.repository.SiteRepository;
 
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -27,5 +31,13 @@ public class SiteService {
             site.setPassword(password);
         }
         return site;
+    }
+
+    public List<Link> findAll(Principal principal) {
+        Site site = siteRepository.findByLogin(principal.getName());
+        if (site != null) {
+            return new ArrayList<Link>(site.getLinks());
+        }
+        return null;
     }
 }

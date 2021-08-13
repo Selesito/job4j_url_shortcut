@@ -1,5 +1,7 @@
 package ru.job4j.shortcut.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -8,14 +10,11 @@ import java.util.Objects;
 public class Link {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private int id;
     private String url;
     private String code;
     private int count;
-
-    @ManyToOne
-    @JoinColumn(name = "site_id")
-    private Site site;
 
     public static Link of(String url, String code, int count) {
         Link link = new Link();
@@ -55,6 +54,10 @@ public class Link {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public void incrementCount() {
+        this.count++;
     }
 
     @Override

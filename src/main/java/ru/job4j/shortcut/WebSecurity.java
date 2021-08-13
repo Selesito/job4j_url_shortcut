@@ -33,7 +33,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/site/registration")
+                .antMatchers(HttpMethod.POST, "/site/registration", "/link/redirect")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
