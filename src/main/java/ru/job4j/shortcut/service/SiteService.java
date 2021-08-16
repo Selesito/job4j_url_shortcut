@@ -1,5 +1,8 @@
 package ru.job4j.shortcut.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.job4j.shortcut.model.Link;
@@ -13,6 +16,7 @@ import java.util.UUID;
 
 @Service
 public class SiteService {
+    private static final Logger LOG = LoggerFactory.getLogger(SiteService.class.getName());
     private final SiteRepository siteRepository;
     private final BCryptPasswordEncoder encoder;
 
@@ -22,13 +26,17 @@ public class SiteService {
     }
 
     public Site save(Site site) {
-        if (siteRepository.findByUsername(site.getUsername()) == null) {
+        try {
             site.setRegistration(true);
             site.setLogin(UUID.randomUUID().toString());
             String password = UUID.randomUUID().toString();
             site.setPassword(encoder.encode(password));
             siteRepository.save(site);
             site.setPassword(password);
+        } catch (DataIntegrityViolationException e) {
+            LOG.error("Учетная запись существует с таким именем!", e.getMessage());
+            e.printStackTrace();
+            return null;
         }
         return site;
     }
